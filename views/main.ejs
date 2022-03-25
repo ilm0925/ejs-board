@@ -14,23 +14,43 @@
   </head>
 
   <body>
-    <table class="table">
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+      }
+      .TableBox {
+        border: 0.5px solid #828282;
+      }
+      button {
+        margin: 5px;
+      }
+      td {
+        font-weight: bold;
+      }
+    </style>
+    <table class="table TableBox">
       <thead>
         <tr>
           <th scope="col">#</th>
           <th scope="col">글 제목</th>
-          <th scope="col">내용</th>
+          <th scope="col">내용</th>
           <th scope="col">날짜</th>
+          <th scope="col">수정/삭제</th>
         </tr>
       </thead>
-      <tbody>
-        <% data.forEach((el,index) => { %>
 
+      <tbody>
+        <% data.forEach((el,index) => {%>
         <tr>
           <th scope="row"><%= index %></th>
           <td><%= el.Title %></td>
           <td><%= el.Article %></td>
-          <td><%= el.Created %></td>
+          <td><%= el.Created.toLocaleDateString() %></td>
+          <td>
+            <button class="btn btn-danger">삭제</button>
+            <button class="btn btn-warning">수정</button>
+          </td>
         </tr>
         <% }) %>
       </tbody>
