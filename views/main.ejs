@@ -12,23 +12,33 @@
     />
     <title>메인 페이지</title>
   </head>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+    }
+    .TableBox {
+      border: 0.5px solid #828282;
+    }
+    .posting {
+      border-radius: 50px;
+      width: 500px;
+    }
 
+    button {
+      margin: 5px;
+    }
+    td {
+      font-weight: bold;
+    }
+  </style>
   <body>
-    <style>
-      body {
-        display: flex;
-        justify-content: center;
-      }
-      .TableBox {
-        border: 0.5px solid #828282;
-      }
-      button {
-        margin: 5px;
-      }
-      td {
-        font-weight: bold;
-      }
-    </style>
+    <div class="btnBox">
+      <button class="w-50 mb-5 mt-2 btn btn-success">글쓰기</button>
+    </div>
+
     <table class="table TableBox">
       <thead>
         <tr>
@@ -43,17 +53,16 @@
       <tbody>
         <% data.forEach((el,index) => {%>
         <tr>
-          <th scope="row"><%= index %></th>
+          <th scope="row"><%= index + 1%></th>
           <td><%= el.Title %></td>
           <td><%= el.Article %></td>
           <td><%= el.Created.toLocaleDateString() %></td>
           <td>
-            <button class="btn btn-danger">삭제</button>
-            <button class="btn btn-warning">수정</button>
+            <a class="btn btn-warning" href="#">수정/삭제</a>
           </td>
         </tr>
-        <% }) %>
       </tbody>
+      <% }) %>
     </table>
   </body>
 </html>
