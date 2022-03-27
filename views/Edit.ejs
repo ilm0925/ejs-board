@@ -14,29 +14,33 @@
   </head>
 
   <body>
+    <form id="delete" action="/delete" method="post"></form>
     <form
+      id="edit"
       style="height: 100vh"
       class="container d-flex flex-column justify-content-center"
-      action="/delete"
+      action="/edit"
+      method="post"
     >
-      <h1 class="text-center"></h1>
-      <div class="form-floating mb-3">
-        <input
-          type="email"
-          class="form-control"
-          id="floatingInput"
-          placeholder="name@example.com"
-        />
-        <label for="floatingInput">Email address</label>
-      </div>
-      <div class="form-floating">
-        <input
-          type="password"
-          class="form-control"
-          id="floatingPassword"
-          placeholder="Password"
-        />
-        <label for="floatingPassword">Password</label>
+      <h2 class="text-center">
+        <%= Data.Created.toLocaleDateString() + "에 작성됨"%>
+      </h2>
+      <input
+        name="Title"
+        class="text-center form-control"
+        value="<%= Data.Title %> "
+        type="text"
+      />
+
+      <textarea name="Article" class="mt-4 text-center form-control" rows="3">
+    <%= Data.Article %> 
+    </textarea
+      >
+      <div class="text-center mt-3">
+        <button type="submit" class="btn btn-warning">수정</button>
+        <button type="submit" form="delete" class="btn m-3 btn-danger">
+          삭제
+        </button>
       </div>
     </form>
   </body>
