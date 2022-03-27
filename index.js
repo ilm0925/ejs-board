@@ -23,11 +23,17 @@ app.get("/main", (req, res) => {
 });
 app.get("/edit/:id", (req, res) => {
   const ID = req.params.id;
-  console.log(ID);
-  res.render("Edit", { ID });
+  const query = "select * from Topics where id = ?";
+  db.query(query, ID, (err, result) => {
+    if (err) {
+      res.send(err);
+    } else if (result == "") {
+      res.send("찾으시는 페이지가 존재하지않습니다.");
+    } else res.render("Edit", { id: ID, Data: result[0] });
+  });
 });
 
-app.delete("/delete", (req, res) => {
+app.post("/delete", (req, res) => {
   const id = req.body.id;
   console.log(id);
   const query = "delete from Topics where id = ?";
@@ -35,9 +41,7 @@ app.delete("/delete", (req, res) => {
     if (err) {
       res.send(err);
     } else {
-      res.json({
-        answer: true,
-      });
+      res.send(`<script>location.href = "http://localhost:3000/main"</script>`);
     }
   });
 });
