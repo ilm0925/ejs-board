@@ -14,11 +14,7 @@ app.use(express.urlencoded({ extended: false }));
 app.get("/main", (req, res) => {
   const query = "SELECT * from Topics";
   db.query(query, (err, result) => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.render("main", { data: result });
-    }
+    err ? res.send(err) : res.render("main", { data: result });
   });
 });
 app.get("/edit/:id", (req, res) => {
@@ -38,14 +34,50 @@ app.post("/delete", (req, res) => {
   console.log(id);
   const query = "delete from Topics where id = ?";
   db.query(query, id, (err, reslut) => {
-    if (err) {
-      res.send(err);
-    } else {
-      res.send(`<script>location.href = "http://localhost:3000/main"</script>`);
-    }
+    err
+      ? console.log(err)
+      : res.send(
+          '<script>location.href = "http://localhost:3000/main"</script>'
+        );
   });
 });
 
+app.post("/edit", (req, res) => {
+  const Title = req.body.Title;
+  const Article = req.body.Article;
+  const ID = req.body.id;
+  const query = `
+  update Topics set Title = ?, 
+  Article = ?, 
+  Created = DATE_FORMAT(now(), '%Y-%m-%d') where id = ?
+  `;
+  db.query(query, [Title, Article, ID], (err, result) => {
+    err
+      ? console.log(err)
+      : res.send(
+          '<script>location.href = "http://localhost:3000/main"</script>'
+        );
+  });
+});
+
+app.get("/create", (req, res) => {
+  res.render("Create");
+});
+
+app.post("/create", (req, res) => {
+  const Title = req.body.Title;
+  const Article = req.body.Article;
+  const query = `
+  insert into Topics(Title ,Article,Created)
+  values(?,?,DATE_FORMAT(now(), '%Y-%m-%d'))`;
+  db.query(query, [Title, Article], (err, result) => {
+    err
+      ? res.send(err)
+      : res.send(
+          '<script>location.href = "http://localhost:3000/main"</script>'
+        );
+  });
+});
 app.listen(PORT, () => {
   console.log(`listen the port ${PORT}`);
 });

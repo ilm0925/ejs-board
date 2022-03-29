@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -10,38 +10,24 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
-    <title>수정 페이지</title>
+    <title>글 쓰기</title>
   </head>
-
   <body>
-    <form id="delete" action="/delete" method="post"></form>
     <form
       id="edit"
       style="height: 100vh"
       class="container d-flex flex-column justify-content-center"
-      action="/edit"
+      action="/create"
       method="post"
     >
-      <h2 class="text-center">
-        <%= Data.Created.toLocaleDateString() + "에 작성됨"%>
-      </h2>
-      <input
-        name="Title"
-        class="text-center form-control"
-        value="<%= Data.Title %> "
-        type="text"
-      />
-      <input name="id" type="hidden" value="<%= Data.id %> " />
-      <input name="id" form="delete" type="hidden" value="<%= Data.id %> " />
+      <h2 class="text-center">Create</h2>
+      <div class="d-flex justify-content-center">
+        <input name="Title" class="w-50 form-control text-center" type="text" />
+      </div>
       <textarea name="Article" class="mt-4 text-center form-control" rows="8">
-    <%= Data.Article %> 
-    </textarea
-      >
+      </textarea>
       <div class="text-center mt-3">
-        <button type="submit" class="btn btn-warning">수정</button>
-        <button type="submit" form="delete" class="btn m-3 btn-danger">
-          삭제
-        </button>
+        <button type="submit" class="btn btn-primary">글쓰기</button>
       </div>
     </form>
   </body>
