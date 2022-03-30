@@ -17,6 +17,7 @@ app.get("/main", (req, res) => {
     err ? res.send(err) : res.render("main", { data: result });
   });
 });
+
 app.get("/edit/:id", (req, res) => {
   const ID = req.params.id;
   const query = "select * from Topics where id = ?";
@@ -29,16 +30,16 @@ app.get("/edit/:id", (req, res) => {
   });
 });
 
+app.get("/create", (req, res) => {
+  res.render("Create");
+});
+
 app.post("/delete", (req, res) => {
   const id = req.body.id;
   console.log(id);
   const query = "delete from Topics where id = ?";
   db.query(query, id, (err, reslut) => {
-    err
-      ? console.log(err)
-      : res.send(
-          '<script>location.href = "http://localhost:3000/main"</script>'
-        );
+    err ? console.log(err) : res.redirect("/main");
   });
 });
 
@@ -52,16 +53,8 @@ app.post("/edit", (req, res) => {
   Created = DATE_FORMAT(now(), '%Y-%m-%d') where id = ?
   `;
   db.query(query, [Title, Article, ID], (err, result) => {
-    err
-      ? console.log(err)
-      : res.send(
-          '<script>location.href = "http://localhost:3000/main"</script>'
-        );
+    err ? console.log(err) : res.redirect("/main");
   });
-});
-
-app.get("/create", (req, res) => {
-  res.render("Create");
 });
 
 app.post("/create", (req, res) => {
@@ -71,13 +64,10 @@ app.post("/create", (req, res) => {
   insert into Topics(Title ,Article,Created)
   values(?,?,DATE_FORMAT(now(), '%Y-%m-%d'))`;
   db.query(query, [Title, Article], (err, result) => {
-    err
-      ? res.send(err)
-      : res.send(
-          '<script>location.href = "http://localhost:3000/main"</script>'
-        );
+    err ? res.send(err) : res.redirect("/main");
   });
 });
+
 app.listen(PORT, () => {
   console.log(`listen the port ${PORT}`);
 });
